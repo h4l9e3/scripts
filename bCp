@@ -1,0 +1,30 @@
+#!/bin/bash
+
+extension="$1"
+velocidad="$2"
+d="$3"
+ftmp=`mktemp`
+destino="/mnt/$d"
+
+function rmTmp() {
+	[ -f "$1" ] && rm -f "$1" >/dev/null
+}
+
+for fichero in $( ls -1X *.${extension} ); do
+
+	echo "Copiando $fichero a $destino ..."
+
+	cPipe "$fichero" $velocidad "$d" -q > $ftmp
+	r=$?
+
+	if [ $r -eq 0 ]; then
+		touch ${fichero}.bCp-ok
+	else
+		cat $ftmp > ${fichero}.bCp-error
+	fi
+
+	sleep 10
+
+done
+
+rmTmp $ftmp

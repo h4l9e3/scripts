@@ -1,0 +1,11 @@
+set -x
+objeto="$1"
+directorio="$2"
+flags="$3"
+if [ -f "$objeto" ]; then
+	# el objeto es un fichero
+	find . -type f -name "${objeto}" -exec mv -vi ${flags} "{}" "/mnt/${directorio}/" \;
+elif [ -d "$objeto" ]; then
+	# el objeto es un directorio
+	find . -type d -name "${objeto}" -exec mv -vi ${flags} "{}" "/mnt/${directorio}/" \;
+fi

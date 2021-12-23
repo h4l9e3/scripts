@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#set -x
+
+thing="$1"
+
+echo -n "Unmounting ${thing}: "
+
+if [ ! -f /tmp/${thing}.lck ]; then
+	sudo umount -v ~/mnt/${thing}
+else
+	echo "Blocked!"
+fi

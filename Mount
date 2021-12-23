@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#set -x
+# add router to /etc/hosts
+
+thing="$1"
+flag="$2"
+password="$3"
+
+# configure uid and gid
+uid="100"
+gid="100"
+
+echo -n "Monting ${thing}: "
+
+sudo curlftpfs -s -o rw,allow_other,uid=$uid,gid=$gid ftp://${thing}:${password}@router/ ~/mnt/${thing}
+r=$?
+
+echo $r
+
+if [[ "$flag" == "lck" ]] && [ $r -eq 0 ]; then
+	touch /tmp/${thing}.lck
+fi

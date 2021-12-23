@@ -1,0 +1,5 @@
+set -x
+extension="$1"
+directorio="$2"
+flags="$3"
+find . -type f -iname "*.${extension}" -exec mv -vi ${flags} {} /mnt/${directorio}/ \;

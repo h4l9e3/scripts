@@ -1,0 +1,17 @@
+#!/bin/bash
+set -x
+f="$1"
+r="$2"
+dest="$3"
+pvOpt="$4"
+
+pv -L $r $pvOpt "$f" > "/mnt/$dest/$f"
+r=$?
+
+if [ $r -eq 0 ]; then
+  echo "$0: OK"
+else
+  echo "$0: Error!! errCode $r"
+fi
+
+exit $r
